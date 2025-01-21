@@ -79,7 +79,7 @@ def send_msg(session, data, url_rcon):
         logging.error(f'{config["ERROR_IN_MSG"]} {url_rcon}{config["URL_MESSAGE"]}: {e}')
 
 def filter_name(session, player_list, url_rcon):
-    regex = r"[A-Za-z0-9.^-_Ññ]{3}"
+    regex = r"[A-Za-z0-9.^-_Ññ ÄËÏÖÜäëïöü-ÂÊÎÔÛâêîôûÁÉÍÓÚáéíóú]{3}"
     id_list = []
     for player in player_list:
         name = player['name']
