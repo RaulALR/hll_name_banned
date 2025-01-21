@@ -65,8 +65,8 @@ def send_msg(session, data, url_rcon):
         'comment': '',
         'duration_hours': 2,
         'message': f'{config["MSG_WARNING"]}',
-        'player_id': f'{data["id"]}',
-        'player_name': f'{data["name"]} -',
+        'player_id': f'{data["player_id"]}',
+        'player_name': f'{data["player_name"]} -',
         'reason': config['MSG_WARNING'],
         'save_message': True
     }
