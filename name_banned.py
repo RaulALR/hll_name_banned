@@ -79,7 +79,7 @@ def send_msg(session, data, url_rcon):
         logging.error(f'{config["ERROR_IN_MSG"]} {url_rcon}{config["URL_MESSAGE"]}: {e}')
 
 def filter_name(session, player_list, url_rcon):
-    regex = r"[A-Za-z0-9.^-_Ññ]{3}"
+    regex = r"[A-Za-z0-9.^_ÑñÄËÏÖÜäëïöüÂÊÎÔÛâêîôûÁÉÍÓÚáéíóú➡\-\|]{3}"
     id_list = []
     for player in player_list:
         name = player['name']
@@ -93,7 +93,7 @@ def set_player_warning(session, url_rcon, data):
     if(len(players_warning_list) > 0):
         for player in players_warning_list:
             if player['player_id'] == data['player_id']:
-                if(player['num_warnings'] < int(config['NUM_WARNINGS'])):
+                if(player['num_warnings'] <= int(config['NUM_WARNINGS'])):
                     player['num_warnings'] = player['num_warnings'] + 1
                 else:
                     permaban_player(session, url_rcon, data)
