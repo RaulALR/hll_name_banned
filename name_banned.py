@@ -35,6 +35,7 @@ def load_config():
         "ENABLE_BAN": os.environ['ENABLE_BAN'].lower() == "true",
         "SUCCESSFUL_BAN_MSG": os.environ['SUCCESSFUL_BAN_MSG'],
         "REASON_MSG": os.environ['REASON_MSG'],
+        "REGEX": os.environ['REGEX']
     }
 
 config = load_config()
@@ -79,7 +80,7 @@ def send_msg(session, data, url_rcon):
         logging.error(f'{config["ERROR_IN_MSG"]} {url_rcon}{config["URL_MESSAGE"]}: {e}')
 
 def filter_name(session, player_list, url_rcon):
-    regex = r"[A-Za-z0-9.^_ÑñÄËÏÖÜäëïöüÂÊÎÔÛâêîôûÁÉÍÓÚáéíóú➡\-\|]{3}"
+    regex = config['REGEX']
     id_list = []
     for player in player_list:
         name = player['name']
