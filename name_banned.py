@@ -9,8 +9,6 @@ import re
 dotenv_path = find_dotenv()
 load_dotenv(dotenv_path)
 
-regex = r'[a-zA-Z0-9*ÑñÄËÏÖÜäëïöüÁÉÍÓÚáéíóúÂÊÎÔÛ➡_\[\]\|\- ]{3}'
-
 logging.basicConfig(
     filename='./name_banned.log',
     level=logging.INFO,
@@ -38,7 +36,8 @@ def load_config():
         "SUCCESSFUL_BAN_MSG": os.environ['SUCCESSFUL_BAN_MSG'],
         "REASON_MSG": os.environ['REASON_MSG'],
         "DISCORD_WEBHOOK_URL": os.environ['DISCORD_WEBHOOK_URL'],
-        "DISCORD_MSG": os.environ['DISCORD_MSG']
+        "DISCORD_MSG": os.environ['DISCORD_MSG'],
+        "REGEX": os.environ['REGEX']
     }
 
 config = load_config()
@@ -82,11 +81,10 @@ def send_msg(session, data, url_rcon):
         logging.error(f'{config["ERROR_IN_MSG"]} {url_rcon}{config["URL_MESSAGE"]}: {e}')
 
 def filter_name(session, player_list, url_rcon):
-    global regex
     id_list = []
     for player in player_list:
         name = player['name']
-        if not re.search(regex, name):
+        if not re.search(config['REGEX'], name):
             logging.info(f'{player["player_id"]}, {name}')
             id_list.append({'player_name': name, 'player_id': player['player_id']})
     for obj in id_list:
@@ -96,7 +94,7 @@ def set_player_warning(session, url_rcon, data):
     global players_warning_list
     if(len(players_warning_list) > 0):
         for player in players_warning_list:
-            if any(player.values()) and player['player_id'] == data['player_id'] :
+            if any(player.values()) and player['player_id'] == data['player_id']:
                 if(player['num_warnings'] <= int(config['NUM_WARNINGS'])):
                     player['num_warnings'] = player['num_warnings'] + 1
                 else:
@@ -104,9 +102,12 @@ def set_player_warning(session, url_rcon, data):
                     players_warning_list = [player for player in players_warning_list if player['player_id'] != data['player_id']]
             else:
                 players_warning_list.append(create_player_warning(data))
-            time.sleep(2)
     else:
-        players_warning_list.append(create_player_warning(data))
+        if(int(config['NUM_WARNINGS']) == 0):            
+            logging.info(f'{data} perma')
+            permaban_player(session, url_rcon, data)
+        else:
+            players_warning_list.append(create_player_warning(data))
 
 def create_player_warning(data):
     return {"player_id": data['player_id'],"player_name": data['player_name'],"num_warnings": 1}
@@ -137,7 +138,7 @@ def send_discord_message(data):
     try:
         webhook_url = config['DISCORD_WEBHOOK_URL']
         data = {
-            "content": config['DISCORD_MSG'],
+            "content": config["DISCORD_MSG"],
         }
         response = requests.post(webhook_url, json=data)
         response.raise_for_status()
@@ -154,7 +155,6 @@ def init_process():
                             players = get_players(session, url_rcon)
                             if players:
                                 filter_name(session, players, url_rcon)
-                        time.sleep(15)
                     except Exception as e:
                         logging.error(f"{config['UNEXPECTED_ERROR_MSG']}: {e}")
         except Exception as e:

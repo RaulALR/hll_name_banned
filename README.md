@@ -69,6 +69,9 @@ El bot realiza las siguientes tareas:
 - `DISCORD_MSG=Has sido baneado`
   - Mensaje que manda al webhook 
 
+- `REGEX=[A-Za-z0-9.^_ÑñÄËÏÖÜäëïöüÂÊÎÔÛâêîôûÁÉÍÓÚáéíóú➡\-\|]{3}`
+  - Expresión regular en la que se basara el criterio de monitorización
+
 ---
 
 DISCORD_WEBHOOK_URL
@@ -175,6 +178,10 @@ The bot performs the following tasks:
 
 - `DISCORD_MSG=You've been banned`
   - Message sent to the webhook 
+
+- `REGEX=[A-Za-z0-9.^_ÑñÄËÏÖÜäëïöüÂÊÎÔÛâêîôûÁÉÍÓÚáéíóú➡\-\|]{3}`
+  - Regular expression on which the monitoring criteria will be based.
+
 ---
 
 ## Additional Notes
