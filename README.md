@@ -63,11 +63,16 @@ El bot realiza las siguientes tareas:
 - `ENABLE_BAN=false`
   - Configuración para habilitar o deshabilitar el baneo. Si está configurado como `false`, el bot solo enviará advertencias pero no aplicará baneos.
 
-- `REGEX=[A-Za-z0-9.^_ÑñÄËÏÖÜäëïöüÂÊÎÔÛâêîôûÁÉÍÓÚáéíóú➡\-\|]{3}`
-  - Expresión regular en la que se basara el criterio de monitorización
+- `DISCORD_WEBHOOK_URL=https://....`
+  - Webhook de Discord donde llegará el aviso de baneo
+
+- `DISCORD_MSG=Has sido baneado`
+  - Mensaje que manda al webhook 
 
 ---
 
+DISCORD_WEBHOOK_URL
+DISCORD_MSG
 ## Notas Adicionales
 
 - Asegúrate de que las credenciales (usuario y contraseña) sean correctas y que el servidor RCON esté configurado para aceptar conexiones del bot.
@@ -96,7 +101,8 @@ REASON_MSG=Nombre no válido
 SUCCESSFUL_BAN_MSG=Permabaneado:
 NUM_WARNINGS=3
 ENABLE_BAN=false
-REGEX=[A-Za-z0-9.^_ÑñÄËÏÖÜäëïöüÂÊÎÔÛâêîôûÁÉÍÓÚáéíóú➡\-\|]{3}
+DISCORD_WEBHOOK_URL=
+DISCORD_MSG=
 ```
 
 ---
@@ -164,8 +170,11 @@ The bot performs the following tasks:
 - `ENABLE_BAN=false`
   - Configuration to enable or disable banning. If set to `false`, the bot will only send warnings but will not apply bans.
 
-- `REGEX=[A-Za-z0-9.^_ÑñÄËÏÖÜäëïöüÂÊÎÔÛâêîôûÁÉÍÓÚáéíóú➡\-\|]{3}`
-  - Regular expression on which the monitoring criteria will be based.
+- `DISCORD_WEBHOOK_URL=https://....`
+  - Discord webhook where the ban notice will arrive
+
+- `DISCORD_MSG=You've been banned`
+  - Message sent to the webhook 
 ---
 
 ## Additional Notes
@@ -196,5 +205,6 @@ REASON_MSG=Invalid name
 SUCCESSFUL_BAN_MSG=Permanently banned:
 NUM_WARNINGS=3
 ENABLE_BAN=false
-REGEX=[A-Za-z0-9.^_ÑñÄËÏÖÜäëïöüÂÊÎÔÛâêîôûÁÉÍÓÚáéíóú➡\-\|]{3}
+DISCORD_WEBHOOK_URL=
+DISCORD_MSG=
 ```
